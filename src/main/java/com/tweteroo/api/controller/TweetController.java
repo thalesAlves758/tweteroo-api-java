@@ -10,6 +10,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +49,16 @@ public class TweetController {
   public List<ResponseTweetDTO> getTweets(
       @PageableDefault(sort = "id", direction = Sort.Direction.DESC, page = 0, size = 5) Pageable page) {
     List<Tweet> tweets = tweetService.getTweets(page);
+
+    List<ResponseTweetDTO> response = tweets.stream().map((tweet) -> modelMapper.map(tweet, ResponseTweetDTO.class))
+        .toList();
+
+    return response;
+  }
+
+  @GetMapping("/{username}")
+  public List<ResponseTweetDTO> getTweetsFromUser(@PathVariable String username) {
+    List<Tweet> tweets = tweetService.getTweetsByUsername(username);
 
     List<ResponseTweetDTO> response = tweets.stream().map((tweet) -> modelMapper.map(tweet, ResponseTweetDTO.class))
         .toList();
