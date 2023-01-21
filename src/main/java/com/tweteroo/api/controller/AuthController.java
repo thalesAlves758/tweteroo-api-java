@@ -26,14 +26,14 @@ public class AuthController {
   private ModelMapper modelMapper;
 
   @PostMapping()
-  public ResponseEntity<TweterooUser> signUp(@RequestBody @Valid SignUpDto body) {
+  public ResponseEntity signUp(@RequestBody @Valid SignUpDto body) {
     TweterooUser user = modelMapper.map(body, TweterooUser.class);
 
     try {
       authService.signUp(user);
       return new ResponseEntity<>(HttpStatus.CREATED);
     } catch (UserAlreadyExistsException e) {
-      return new ResponseEntity<>(HttpStatus.CONFLICT);
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
     }
   }
 }
