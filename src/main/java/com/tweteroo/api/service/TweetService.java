@@ -36,4 +36,8 @@ public class TweetService {
   public List<Tweet> getTweets(Pageable pageable) {
     return tweetRepository.findAll(pageable).getContent();
   }
+
+  public List<Tweet> getTweetsByUsername(String username) {
+    return tweetRepository.findAllByUsername(username);
+  }
 }
