@@ -31,7 +31,7 @@ public class AuthController {
 
     try {
       authService.signUp(user);
-      return new ResponseEntity<>(HttpStatus.CREATED);
+      return new ResponseEntity<>("OK", HttpStatus.CREATED);
     } catch (UserAlreadyExistsException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
     }
