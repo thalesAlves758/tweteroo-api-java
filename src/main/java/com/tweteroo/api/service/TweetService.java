@@ -1,8 +1,10 @@
 package com.tweteroo.api.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tweteroo.api.exception.UserNotExists;
@@ -29,5 +31,9 @@ public class TweetService {
     tweet.setAvatar(user.get().getAvatar());
 
     return tweetRepository.save(tweet);
+  }
+
+  public List<Tweet> getTweets(Pageable pageable) {
+    return tweetRepository.findAll(pageable).getContent();
   }
 }
